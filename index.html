@@ -1,292 +1,367 @@
-<!DOCTYPE html>
+sa <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lista de Tarefas Profissional</title>
-<style>
-  :root {
-    --cor-fundo-claro: #f4f4f4;
-    --cor-card-claro: #fff;
-    --cor-texto-claro: #333;
-    --cor-fundo-escuro: #1e1e1e;
-    --cor-card-escuro: #2c2c2c;
-    --cor-texto-escuro: #eee;
-    --cor-principal: #007bff;
-  }
-
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: var(--cor-fundo-claro);
-    color: var(--cor-texto-claro);
-    margin: 0;
-    padding: 0;
-    transition: 0.3s;
-    background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97');
-    background-size: cover;
-    background-position: center;
-  }
-
-  body.escuro {
-    background: var(--cor-fundo-escuro);
-    color: var(--cor-texto-escuro);
-    background-image: url('https://images.unsplash.com/photo-1517180102446-f3ece451e9d8');
-  }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 25px;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(6px);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    position: sticky;
-    top: 0;
-    transition: 0.3s;
-  }
-
-  body.escuro header {
-    background: rgba(40,40,40,0.9);
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    margin: 0;
-  }
-
-  .tema-btn {
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: var(--cor-principal);
-    transition: 0.3s;
-  }
-
-  .container {
-    max-width: 600px;
-    margin: 30px auto;
-    background: rgba(255,255,255,0.8);
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    backdrop-filter: blur(5px);
-    transition: 0.3s;
-  }
-
-  body.escuro .container {
-    background: rgba(44,44,44,0.8);
-  }
-
-  input, button {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    outline: none;
-  }
-
-  input {
-    width: 70%;
-  }
-
-  button {
-    background: var(--cor-principal);
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  button:hover {
-    opacity: 0.8;
-  }
-
-  .abas {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 15px;
-  }
-
-  .abas button {
-    background: transparent;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    color: inherit;
-    padding: 10px;
-    border-bottom: 2px solid transparent;
-  }
-
-  .abas button.active {
-    border-bottom: 2px solid var(--cor-principal);
-  }
-
-  .aba {
-    display: none;
-  }
-
-  .aba.active {
-    display: block;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  li {
-    background: var(--cor-card-claro);
-    margin: 8px 0;
-    padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: 0.3s;
-  }
-
-  body.escuro li {
-    background: var(--cor-card-escuro);
-  }
-
-  li span {
-    flex-grow: 1;
-  }
-
-  .data {
-    font-size: 0.8rem;
-    color: gray;
-    margin-left: 10px;
-  }
-
-  .botoes-tarefa button {
-    margin-left: 8px;
-    font-size: 0.9rem;
-    padding: 5px 10px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Tarefas Profissional</title>
+  <style>
+    :root {
+      --cor-fundo-claro: #f4f4f4;
+      --cor-card-claro: #fff;
+      --cor-texto-claro: #333;
+      --cor-fundo-escuro: #1e1e1e;
+      --cor-card-escuro: #2c2c2c;
+      --cor-texto-escuro: #eee;
+      --cor-principal: #007bff;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--cor-fundo-claro);
+      color: var(--cor-texto-claro);
+      margin: 0;
+      padding: 0;
+      transition: 0.3s;
+      background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97');
+      background-size: cover;
+      background-position: center;
+    }
+    body.escuro {
+      background: var(--cor-fundo-escuro);
+      color: var(--cor-texto-escuro);
+      background-image: url('https://images.unsplash.com/photo-1517180102446-f3ece451e9d8');
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 25px;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      transition: 0.3s;
+    }
+    body.escuro header {
+      background: rgba(40,40,40,0.9);
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+    .tema-btn {
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--cor-principal);
+      transition: 0.3s;
+    }
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: rgba(255,255,255,0.8);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      backdrop-filter: blur(5px);
+      transition: 0.3s;
+    }
+    body.escuro .container {
+      background: rgba(44,44,44,0.8);
+    }
+    input, button {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+    input {
+      width: 70%;
+    }
+    button {
+      background: var(--cor-principal);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      opacity: 0.8;
+    }
+    .abas {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 15px;
+    }
+    .abas button {
+      background: transparent;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      color: inherit;
+      padding: 10px;
+      border-bottom: 2px solid transparent;
+    }
+    .abas button.active {
+      border-bottom: 2px solid var(--cor-principal);
+    }
+    .aba {
+      display: none;
+    }
+    .aba.active {
+      display: block;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: var(--cor-card-claro);
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.3s;
+    }
+    body.escuro li {
+      background: var(--cor-card-escuro);
+    }
+    li span {
+      flex-grow: 1;
+    }
+    .data {
+      font-size: 0.8rem;
+      color: gray;
+      margin-left: 10px;
+    }
+    .botoes-tarefa button {
+      margin-left: 8px;
+      font-size: 0.9rem;
+      padding: 5px 10px;
+    }
+    .contador {
+      font-size: 0.9rem;
+      color: var(--cor-principal);
+      font-weight: bold;
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(0, 123, 255, 0.1);
+      border-radius: 8px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <header>
     <h1>Lista de Tarefas</h1>
-    <button id="temaBtn" class="tema-btn">☀️</button>
+    <button class="tema-btn" id="temaBtn">☀️</button>
   </header>
 
   <div class="container">
     <div>
-      <input type="text" id="novaTarefa" placeholder="Digite uma nova tarefa...">
+      <input id="novaTarefa" placeholder="Digite uma nova tarefa..." type="text"/>
       <button id="adicionar">Adicionar</button>
     </div>
-
     <div class="abas">
-      <button id="abaPendentes" class="active">Pendentes</button>
+      <button class="active" id="abaPendentes">Pendentes</button>
       <button id="abaFeitas">Feitas</button>
     </div>
-
-    <div id="pendentes" class="aba active">
+    <div class="aba active" id="pendentes">
       <ul id="listaPendentes"></ul>
     </div>
-
-    <div id="feitas" class="aba">
+    <div class="aba" id="feitas">
       <ul id="listaFeitas"></ul>
+      <div class="contador" id="contadorFeitas"></div>
     </div>
   </div>
 
-<script>
-  const novaTarefa = document.getElementById("novaTarefa");
-  const adicionar = document.getElementById("adicionar");
-  const listaPendentes = document.getElementById("listaPendentes");
-  const listaFeitas = document.getElementById("listaFeitas");
-  const abaPendentes = document.getElementById("abaPendentes");
-  const abaFeitas = document.getElementById("abaFeitas");
-  const temaBtn = document.getElementById("temaBtn");
+  <script>
+    // Sistema de localStorage para persistência de dados
+    const STORAGE_KEY = 'tarefas_app';
+    
+    // Elementos do DOM
+    const novaTarefa = document.getElementById('novaTarefa');
+    const adicionar = document.getElementById('adicionar');
+    const listaPendentes = document.getElementById('listaPendentes');
+    const listaFeitas = document.getElementById('listaFeitas');
+    const contadorFeitas = document.getElementById('contadorFeitas');
+    const abaPendentes = document.getElementById('abaPendentes');
+    const abaFeitas = document.getElementById('abaFeitas');
+    const temaBtn = document.getElementById('temaBtn');
+    
+    // Estado da aplicação
+    let temaEscuro = false;
+    let tarefas = {
+      pendentes: [],
+      feitas: []
+    };
 
-  let temaEscuro = false;
+    // Carregar dados do localStorage ao inicializar
+    function carregarDados() {
+      const dados = localStorage.getItem(STORAGE_KEY);
+      if (dados) {
+        tarefas = JSON.parse(dados);
+      }
+      renderizar();
+      atualizarContador();
+    }
 
-  temaBtn.addEventListener("click", () => {
-    temaEscuro = !temaEscuro;
-    document.body.classList.toggle("escuro", temaEscuro);
-    temaBtn.textContent = temaEscuro ? "🌙" : "☀️";
-  });
+    // Salvar dados no localStorage
+    function salvarDados() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tarefas));
+    }
 
-  function criarItem(tarefa, feita = false, data = null) {
-    const li = document.createElement("li");
-    const span = document.createElement("span");
-    span.textContent = tarefa;
-
-    const botoes = document.createElement("div");
-    botoes.classList.add("botoes-tarefa");
-
-    if (feita) {
-      const dataSpan = document.createElement("span");
-      dataSpan.classList.add("data");
-      dataSpan.textContent = data ? `Feita em: ${data}` : "";
-      li.appendChild(dataSpan);
-
-      const restaurarBtn = document.createElement("button");
-      restaurarBtn.textContent = "Restaurar";
-      restaurarBtn.addEventListener("click", () => {
-        listaFeitas.removeChild(li);
-        listaPendentes.appendChild(criarItem(tarefa));
+    // Renderizar todas as tarefas na interface
+    function renderizar() {
+      listaPendentes.innerHTML = '';
+      listaFeitas.innerHTML = '';
+      
+      tarefas.pendentes.forEach((tarefa, index) => {
+        listaPendentes.appendChild(criarItem(tarefa, false, index, 'pendentes'));
       });
-
-      const excluirBtn = document.createElement("button");
-      excluirBtn.textContent = "Excluir";
-      excluirBtn.addEventListener("click", () => {
-        listaFeitas.removeChild(li);
+      
+      tarefas.feitas.forEach((tarefa, index) => {
+        listaFeitas.appendChild(criarItem(tarefa, true, index, 'feitas'));
       });
+    }
 
-      botoes.appendChild(restaurarBtn);
-      botoes.appendChild(excluirBtn);
-    } else {
-      const feitoBtn = document.createElement("button");
-      feitoBtn.textContent = "Feita";
-      feitoBtn.addEventListener("click", () => {
-        listaPendentes.removeChild(li);
-        const dataAtual = new Date().toLocaleString("pt-BR", {
-          dateStyle: "short",
-          timeStyle: "short"
+    // Atualizar contador de tarefas feitas
+    function atualizarContador() {
+      const total = tarefas.feitas.length;
+      if (total > 0) {
+        contadorFeitas.textContent = `Total de tarefas feitas: ${total}`;
+        contadorFeitas.style.display = 'block';
+      } else {
+        contadorFeitas.style.display = 'none';
+      }
+    }
+
+    // Criar elemento de tarefa
+    function criarItem(tarefa, feita = false, index, tipo) {
+      const li = document.createElement('li');
+      const span = document.createElement('span');
+      span.textContent = tarefa.texto;
+      
+      const botoes = document.createElement('div');
+      botoes.classList.add('botoes-tarefa');
+      
+      if (feita) {
+        const dataSpan = document.createElement('span');
+        dataSpan.classList.add('data');
+        dataSpan.textContent = `Feita em: ${tarefa.data || 'data não disponível'}`;
+        li.appendChild(dataSpan);
+        
+        const restaurarBtn = document.createElement('button');
+        restaurarBtn.textContent = 'Restaurar';
+        restaurarBtn.addEventListener('click', () => {
+          tarefas.feitas.splice(index, 1);
+          tarefas.pendentes.push({ texto: tarefa.texto });
+          salvarDados();
+          renderizar();
+          atualizarContador();
         });
-        listaFeitas.appendChild(criarItem(tarefa, true, dataAtual));
-      });
-
-      const excluirBtn = document.createElement("button");
-      excluirBtn.textContent = "Excluir";
-      excluirBtn.addEventListener("click", () => {
-        listaPendentes.removeChild(li);
-      });
-
-      botoes.appendChild(feitoBtn);
-      botoes.appendChild(excluirBtn);
+        
+        const excluirBtn = document.createElement('button');
+        excluirBtn.textContent = 'Excluir';
+        excluirBtn.addEventListener('click', () => {
+          tarefas.feitas.splice(index, 1);
+          salvarDados();
+          renderizar();
+          atualizarContador();
+        });
+        
+        botoes.appendChild(restaurarBtn);
+        botoes.appendChild(excluirBtn);
+      } else {
+        const feitoBtn = document.createElement('button');
+        feitoBtn.textContent = 'Feita';
+        feitoBtn.addEventListener('click', () => {
+          const dataAtual = new Date().toLocaleString('pt-BR', {
+            dateStyle: 'short',
+            timeStyle: 'short'
+          });
+          tarefas.pendentes.splice(index, 1);
+          tarefas.feitas.push({ texto: tarefa.texto, data: dataAtual });
+          salvarDados();
+          renderizar();
+          atualizarContador();
+        });
+        
+        const excluirBtn = document.createElement('button');
+        excluirBtn.textContent = 'Excluir';
+        excluirBtn.addEventListener('click', () => {
+          tarefas.pendentes.splice(index, 1);
+          salvarDados();
+          renderizar();
+          atualizarContador();
+        });
+        
+        botoes.appendChild(feitoBtn);
+        botoes.appendChild(excluirBtn);
+      }
+      
+      li.appendChild(span);
+      li.appendChild(botoes);
+      return li;
     }
 
-    li.appendChild(span);
-    li.appendChild(botoes);
-    return li;
-  }
+    // Adicionar nova tarefa
+    adicionar.addEventListener('click', () => {
+      const texto = novaTarefa.value.trim();
+      if (texto !== '') {
+        tarefas.pendentes.push({ texto });
+        salvarDados();
+        renderizar();
+        novaTarefa.value = '';
+      }
+    });
 
-  adicionar.addEventListener("click", () => {
-    const tarefa = novaTarefa.value.trim();
-    if (tarefa !== "") {
-      listaPendentes.appendChild(criarItem(tarefa));
-      novaTarefa.value = "";
+    // Permitir adicionar tarefa com Enter
+    novaTarefa.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        adicionar.click();
+      }
+    });
+
+    // Alternar abas
+    abaPendentes.addEventListener('click', () => {
+      abaPendentes.classList.add('active');
+      abaFeitas.classList.remove('active');
+      document.getElementById('pendentes').classList.add('active');
+      document.getElementById('feitas').classList.remove('active');
+    });
+
+    abaFeitas.addEventListener('click', () => {
+      abaFeitas.classList.add('active');
+      abaPendentes.classList.remove('active');
+      document.getElementById('feitas').classList.add('active');
+      document.getElementById('pendentes').classList.remove('active');
+    });
+
+    // Tema escuro/claro
+    temaBtn.addEventListener('click', () => {
+      temaEscuro = !temaEscuro;
+      document.body.classList.toggle('escuro', temaEscuro);
+      temaBtn.textContent = temaEscuro ? '🌙' : '☀️';
+      localStorage.setItem('tema_escuro', temaEscuro);
+    });
+
+    // Restaurar tema ao carregar
+    function restaurarTema() {
+      const temaSalvo = localStorage.getItem('tema_escuro') === 'true';
+      if (temaSalvo) {
+        temaEscuro = true;
+        document.body.classList.add('escuro');
+        temaBtn.textContent = '🌙';
+      }
     }
-  });
 
-  abaPendentes.addEventListener("click", () => {
-    abaPendentes.classList.add("active");
-    abaFeitas.classList.remove("active");
-    document.getElementById("pendentes").classList.add("active");
-    document.getElementById("feitas").classList.remove("active");
-  });
-
-  abaFeitas.addEventListener("click", () => {
-    abaFeitas.classList.add("active");
-    abaPendentes.classList.remove("active");
-    document.getElementById("feitas").classList.add("active");
-    document.getElementById("pendentes").classList.remove("active");
-  });
-</script>
+    // Inicializar aplicação
+    restaurarTema();
+    carregarDados();
+  </script>
 </body>
 </html>
