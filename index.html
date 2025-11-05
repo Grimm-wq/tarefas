@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Tarefas</title>
+  <style>
+    :root {
+      --bg-color: #f4f4f4;
+      --text-color: #222;
+      --card-color: #fff;
+      --accent: #0078d7;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #0f172a;
+      --text-color: #e2e8f0;
+      --card-color: #1e293b;
+      --accent: #38bdf8;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .container {
+      background: var(--card-color);
+      width: 100%;
+      max-width: 500px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .tema-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .tema-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .abas {
+      display: flex;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .aba-botao {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 500;
+      border: none;
+      background: none;
+      color: var(--text-color);
+      transition: 0.3s;
+    }
+
+    .aba-botao.active {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .conteudo {
+      padding: 20px;
+    }
+
+    .aba {
+      display: none;
+    }
+
+    .aba.active {
+      display: block;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.2);
+      font-size: 14px;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: 0.3s;
+    }
+
+    button.add-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button.add-btn:hover {
+      opacity: 0.9;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      background: var(--bg-color);
+      margin-bottom: 10px;
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .data {
+      font-size: 12px;
+      opacity: 0.6;
+      margin-left: 10px;
+    }
+
+    .btn-grupo {
+      display: flex;
+      gap: 6px;
+    }
+
+    .feito-btn, .restaurar-btn, .remover-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: 0.3s;
+    }
+
+    .feito-btn:hover, .restaurar-btn:hover, .remover-btn:hover {
+      opacity: 0.85;
+    }
+
+    .remover-btn {
+      background: #e11d48;
+    }
+
+    .remover-btn:hover {
+      background: #be123c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      Lista de Tarefas
+      <button class="tema-btn" id="temaBtn">☀️</button>
+    </div>
+
+    <div class="abas">
+      <button class="aba-botao active" onclick="abrirAba('tarefas')">Tarefas</button>
+      <button class="aba-botao" onclick="abrirAba('feitas')">Feitas</button>
+    </div>
+
+    <div class="conteudo">
+      <div id="tarefas" class="aba active">
+        <div class="input-area">
+          <input type="text" id="novaTarefa" placeholder="Digite uma nova tarefa...">
+          <button class="add-btn" onclick="adicionarTarefa()">Adicionar</button>
+        </div>
+        <ul id="listaTarefas"></ul>
+      </div>
+
+      <div id="feitas" class="aba">
+        <ul id="listaFeitas"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const listaTarefas = document.getElementById('listaTarefas');
+      const listaFeitas = document.getElementById('listaFeitas');
+      const temaBtn = document.getElementById('temaBtn');
+
+      let tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+      let feitas = JSON.parse(localStorage.getItem('feitas')) || [];
+      let tema = localStorage.getItem('tema') || 'light';
+      document.documentElement.setAttribute('data-theme', tema);
+      temaBtn.textContent = tema === 'dark' ? '🌙' : '☀️';
+
+      function salvar() {
+        localStorage.setItem('tarefas', JSON.stringify(tarefas));
+        localStorage.setItem('feitas', JSON.stringify(feitas));
+      }
+
+      window.abrirAba = function(aba) {
+        document.querySelectorAll('.aba').forEach(div => div.classList.remove('active'));
+        document.querySelectorAll('.aba-botao').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(aba).classList.add('active');
+        document.querySelector(`[onclick="abrirAba('${aba}')"]`).classList.add('active');
+      };
+
+      window.adicionarTarefa = function() {
+        const input = document.getElementById('novaTarefa');
+        const texto = input.value.trim();
+        if (!texto) return;
+        tarefas.push({ texto });
+        input.value = '';
+        salvar();
+        renderizar();
+      };
+
+      window.marcarFeita = function(i) {
+        const tarefa = tarefas.splice(i, 1)[0];
+        const data = new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+        feitas.push({ texto: tarefa.texto, data });
+        salvar();
+        renderizar();
+      };
+
+      window.restaurarTarefa = function(i) {
+        const tarefa = feitas.splice(i, 1)[0];
+        tarefas.push({ texto: tarefa.texto });
+        salvar();
+        renderizar();
+      };
+
+      window.removerTarefa = function(i) {
+        tarefas.splice(i, 1);
+        salvar();
+        renderizar();
+      };
+
+      window.removerFeita = function(i) {
+        feitas.splice(i, 1);
+        salvar();
+        renderizar();
+      };
+
+      function renderizar() {
+        listaTarefas.innerHTML = tarefas.map((t, i) => `
+          <li>
+            <span>${t.texto}</span>
+            <div class="btn-grupo">
+              <button class="feito-btn" onclick="marcarFeita(${i})">Concluir</button>
+              <button class="remover-btn" onclick="removerTarefa(${i})">Excluir</button>
+            </div>
+          </li>
+        `).join('');
+
+        listaFeitas.innerHTML = feitas.map((f, i) => `
+          <li>
+            <div>
+              <span>${f.texto}</span>
+              <span class="data">${f.data}</span>
+            </div>
+            <div class="btn-grupo">
+              <button class="restaurar-btn" onclick="restaurarTarefa(${i})">Restaurar</button>
+              <button class="remover-btn" onclick="removerFeita(${i})">Excluir</button>
+            </div>
+          </li>
+        `).join('');
+      }
+
+      temaBtn.addEventListener('click', () => {
+        const atual = document.documentElement.getAttribute('data-theme');
+        const novo = atual === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', novo);
+        temaBtn.textContent = novo === 'dark' ? '🌙' : '☀️';
+        localStorage.setItem('tema', novo);
+      });
+
+      renderizar();
+    });
+  </script>
+</body>
+</html>
