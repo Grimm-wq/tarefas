@@ -1,8 +1,9 @@
-sa <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
   <title>Lista de Tarefas Profissional</title>
   <style>
     :root {
@@ -162,16 +163,19 @@ sa <!DOCTYPE html>
 
   <div class="container">
     <div>
-      <input id="novaTarefa" placeholder="Digite uma nova tarefa..." type="text"/>
+      <input id="novaTarefa" placeholder="Digite uma nova tarefa..." type="text">
       <button id="adicionar">Adicionar</button>
     </div>
+
     <div class="abas">
       <button class="active" id="abaPendentes">Pendentes</button>
       <button id="abaFeitas">Feitas</button>
     </div>
+
     <div class="aba active" id="pendentes">
       <ul id="listaPendentes"></ul>
     </div>
+
     <div class="aba" id="feitas">
       <ul id="listaFeitas"></ul>
       <div class="contador" id="contadorFeitas"></div>
@@ -181,7 +185,7 @@ sa <!DOCTYPE html>
   <script>
     // Sistema de localStorage para persistência de dados
     const STORAGE_KEY = 'tarefas_app';
-    
+
     // Elementos do DOM
     const novaTarefa = document.getElementById('novaTarefa');
     const adicionar = document.getElementById('adicionar');
@@ -191,14 +195,13 @@ sa <!DOCTYPE html>
     const abaPendentes = document.getElementById('abaPendentes');
     const abaFeitas = document.getElementById('abaFeitas');
     const temaBtn = document.getElementById('temaBtn');
-    
+
     // Estado da aplicação
     let temaEscuro = false;
     let tarefas = {
       pendentes: [],
       feitas: []
     };
-
     // Carregar dados do localStorage ao inicializar
     function carregarDados() {
       const dados = localStorage.getItem(STORAGE_KEY);
@@ -208,26 +211,23 @@ sa <!DOCTYPE html>
       renderizar();
       atualizarContador();
     }
-
     // Salvar dados no localStorage
     function salvarDados() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(tarefas));
     }
-
     // Renderizar todas as tarefas na interface
     function renderizar() {
       listaPendentes.innerHTML = '';
       listaFeitas.innerHTML = '';
-      
+
       tarefas.pendentes.forEach((tarefa, index) => {
         listaPendentes.appendChild(criarItem(tarefa, false, index, 'pendentes'));
       });
-      
+
       tarefas.feitas.forEach((tarefa, index) => {
         listaFeitas.appendChild(criarItem(tarefa, true, index, 'feitas'));
       });
     }
-
     // Atualizar contador de tarefas feitas
     function atualizarContador() {
       const total = tarefas.feitas.length;
@@ -238,22 +238,21 @@ sa <!DOCTYPE html>
         contadorFeitas.style.display = 'none';
       }
     }
-
     // Criar elemento de tarefa
     function criarItem(tarefa, feita = false, index, tipo) {
       const li = document.createElement('li');
       const span = document.createElement('span');
       span.textContent = tarefa.texto;
-      
+
       const botoes = document.createElement('div');
       botoes.classList.add('botoes-tarefa');
-      
+
       if (feita) {
         const dataSpan = document.createElement('span');
         dataSpan.classList.add('data');
         dataSpan.textContent = `Feita em: ${tarefa.data || 'data não disponível'}`;
         li.appendChild(dataSpan);
-        
+
         const restaurarBtn = document.createElement('button');
         restaurarBtn.textContent = 'Restaurar';
         restaurarBtn.addEventListener('click', () => {
@@ -263,7 +262,7 @@ sa <!DOCTYPE html>
           renderizar();
           atualizarContador();
         });
-        
+
         const excluirBtn = document.createElement('button');
         excluirBtn.textContent = 'Excluir';
         excluirBtn.addEventListener('click', () => {
@@ -272,7 +271,7 @@ sa <!DOCTYPE html>
           renderizar();
           atualizarContador();
         });
-        
+
         botoes.appendChild(restaurarBtn);
         botoes.appendChild(excluirBtn);
       } else {
@@ -289,7 +288,7 @@ sa <!DOCTYPE html>
           renderizar();
           atualizarContador();
         });
-        
+
         const excluirBtn = document.createElement('button');
         excluirBtn.textContent = 'Excluir';
         excluirBtn.addEventListener('click', () => {
@@ -298,16 +297,15 @@ sa <!DOCTYPE html>
           renderizar();
           atualizarContador();
         });
-        
+
         botoes.appendChild(feitoBtn);
         botoes.appendChild(excluirBtn);
       }
-      
+
       li.appendChild(span);
       li.appendChild(botoes);
       return li;
     }
-
     // Adicionar nova tarefa
     adicionar.addEventListener('click', () => {
       const texto = novaTarefa.value.trim();
@@ -318,14 +316,12 @@ sa <!DOCTYPE html>
         novaTarefa.value = '';
       }
     });
-
     // Permitir adicionar tarefa com Enter
     novaTarefa.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         adicionar.click();
       }
     });
-
     // Alternar abas
     abaPendentes.addEventListener('click', () => {
       abaPendentes.classList.add('active');
@@ -333,14 +329,12 @@ sa <!DOCTYPE html>
       document.getElementById('pendentes').classList.add('active');
       document.getElementById('feitas').classList.remove('active');
     });
-
     abaFeitas.addEventListener('click', () => {
       abaFeitas.classList.add('active');
       abaPendentes.classList.remove('active');
       document.getElementById('feitas').classList.add('active');
       document.getElementById('pendentes').classList.remove('active');
     });
-
     // Tema escuro/claro
     temaBtn.addEventListener('click', () => {
       temaEscuro = !temaEscuro;
@@ -348,7 +342,6 @@ sa <!DOCTYPE html>
       temaBtn.textContent = temaEscuro ? '🌙' : '☀️';
       localStorage.setItem('tema_escuro', temaEscuro);
     });
-
     // Restaurar tema ao carregar
     function restaurarTema() {
       const temaSalvo = localStorage.getItem('tema_escuro') === 'true';
@@ -358,7 +351,6 @@ sa <!DOCTYPE html>
         temaBtn.textContent = '🌙';
       }
     }
-
     // Inicializar aplicação
     restaurarTema();
     carregarDados();
